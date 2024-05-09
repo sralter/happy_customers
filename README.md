@@ -6,15 +6,15 @@ This project centers on training a model to predict customer satisfaction based 
 
 ### The dataset
 The dataset consists of the following:
-* **Y**: The target attribute, indicating whether the customer noted their happiness or unhappiness
-* **X1**: Order was delivered on time
-* **X2**: Contents of the order was as expected
-* **X3**: I ordered everything that I wanted to order
-* **X4**: I paid a good price for my order
-* **X5**: I am satisfied with my courier
-* **X6**: The app makes ordering easy for me
+* `Y`: The target attribute, indicating whether the customer noted their happiness or unhappiness
+* `X1`: Order was delivered on time
+* `X2`: Contents of the order was as expected
+* `X3`: I ordered everything that I wanted to order
+* `X4`: I paid a good price for my order
+* `X5`: I am satisfied with my courier
+* `X6`: The app makes ordering easy for me
 
-Attributes X1 through X6 are on a 1 to 5 scale, with 5 indicating most agreement with the statement.
+Attributes `X1` through `X6` are on a 1 to 5 scale, with 5 indicating most agreement with the statement.
 
 ### Goals
 * Train a model that predicts whether a customer is happy or not, based on their answers to the survey. 
