@@ -27,6 +27,7 @@ Attributes X1 through X6 are on a 1 to 5 scale, with 5 indicating most agreement
  
 ### EDA
 ![1_ydistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/4ebc9726-9dbe-4909-82c2-a8d40d827796)
+
 55% of the respondents were happy, while 45% of them were unhappy.
 
 ![1_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/c7469088-faef-4954-bd22-08450f4b470e)
