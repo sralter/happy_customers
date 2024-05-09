@@ -25,7 +25,7 @@ Attributes X1 through X6 are on a 1 to 5 scale, with 5 indicating most agreement
   * What is the minimal set of attributes or features that would preserve the most information, while at the same time increasing predictability?
   * See if any question can be eliminated in the next survey round.
  
-### EDA
+## EDA
 ![1_ydistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/4ebc9726-9dbe-4909-82c2-a8d40d827796)
 
 55% of the respondents were happy, while 45% of them were unhappy.
