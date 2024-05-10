@@ -30,6 +30,7 @@ Attributes `X1` through `X6` are on a 1 to 5 scale, with 5 indicating most agree
 
 55% of the respondents were happy, while 45% of them were unhappy.
 
-![1_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/afc14797-e4f7-4145-a422-f77a9c3d6b30)
+
+![1_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/4b6ea23b-3d17-48d4-8a4c-cb468f65a6c7)
 
 The delivery time and app experience had the highest mean satisfaction in the survey. Customers were least satisfied with what they expected of the contents of their order.
