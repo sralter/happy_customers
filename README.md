@@ -33,4 +33,6 @@ Attributes `X1` through `X6` are on a 1 to 5 scale, with 5 indicating most agree
 
 ![1_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/4b6ea23b-3d17-48d4-8a4c-cb468f65a6c7)
 
+![1_xmeandistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/ca427f60-15f5-4563-b8eb-f0549228524c)
+
 The delivery time and app experience had the highest mean satisfaction in the survey. Customers were least satisfied with what they expected of the contents of their order.
