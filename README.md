@@ -26,7 +26,7 @@ Attributes `X1` through `X6` are on a 1 to 5 scale, with 5 indicating most agree
   * See if any question can be eliminated in the next survey round.
  
 ## EDA
-![Distribution of customer happiness in target (y). 54.76% of respondents were happy, while 45.0% of them were unhappy](figs/1_ydistribution.pdf)
+![Distribution of customer happiness in target (y). 54.76% of respondents were happy, while 45.0% of them were unhappy](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/ad3fdca3-c437-4cc8-9096-0245fb257f45)
 
 54.76% of the respondents were happy, while 45.0% of them were unhappy.
 
@@ -36,3 +36,4 @@ Attributes `X1` through `X6` are on a 1 to 5 scale, with 5 indicating most agree
 ![1_xmeandistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/ca427f60-15f5-4563-b8eb-f0549228524c)
 
 The delivery time and app experience had the highest mean satisfaction in the survey. Customers were least satisfied with what they expected of the contents of their order.
+
