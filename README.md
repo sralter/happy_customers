@@ -1,4 +1,4 @@
-# HappyCustomer - An Apziva Project (#1)
+# Happy Customers - An Apziva Project (#1)
 By Samuel Alter
 
 ## Overview
@@ -26,14 +26,16 @@ Attributes `X1` through `X6` are on a 1 to 5 scale, with 5 indicating most agree
   * See if any question can be eliminated in the next survey round.
  
 ## EDA
-![Distribution of customer happiness in target (y). 54.76% of respondents were happy, while 45.0% of them were unhappy](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/ad3fdca3-c437-4cc8-9096-0245fb257f45)
+![Distribution of customer happiness in target (y). 54.76% of respondents were happy, while 45.0% of them were unhappy](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/197cb671-eebb-4526-9bb4-24a5800beef1)
 
 54.76% of the respondents were happy, while 45.0% of them were unhappy.
 
+![1_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/852df7d2-6022-416e-8734-a77a8917f7d2)
 
-![1_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/4b6ea23b-3d17-48d4-8a4c-cb468f65a6c7)
+This plot illustrates well the distribution of responses received in the survey. Although it is harder to draw conclusions from this figure, I think it is still valid to understand the overall trends in the data. Figure 3 has more explanatory value.
 
 ![1_xmeandistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/ca427f60-15f5-4563-b8eb-f0549228524c)
 
 The delivery time and app experience had the highest mean satisfaction in the survey. Customers were least satisfied with what they expected of the contents of their order.
 
+Apziva: UP2IqAzAWrVBrULk
