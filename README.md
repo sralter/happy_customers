@@ -77,6 +77,7 @@ The results of the basic form of the model yield an accuracy of 46% - pretty dis
 
 #### Grid Search with XGBoost
 * The best score on the training set was 67% using the following parameters:
+
 |Parameter name | Value|
 |-|-|
 |`alpha`|0|
