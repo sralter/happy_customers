@@ -1,6 +1,8 @@
 # Happy Customers - An Apziva Project (#1)
 By Samuel Alter
 
+Apziva: 18RTcr7zXIKyc7qb
+
 ## Overview
 This project centers on training a model to predict customer satisfaction based on results of a customer survey from a delivery company. 
 
@@ -90,5 +92,3 @@ The results of the basic form of the model yield an accuracy of 46% - pretty dis
 * When the testing data is run with these parameters, we get a cross-validated accuracy of: 57.88% ± 8.47%
 
 This is a better result than the base model, though I'm certain there's more we can do to increase the accuracy.
-
-Apziva: UP2IqAzAWrVBrULk
