@@ -21,12 +21,12 @@ Apziva: 18RTcr7zXIKyc7qb
 * The company's **delivery time** elicited the **highest average satisfaction**
 * Upon opening their order, the customers rated the **contents of the order** the **worst average satisfaction**
 * The **results** of our modeling show:
- > The low number of observations have a big effect on the modeling performance
- > That being said, we were able to improve upon the baseline accuracy **from about 55%** to **over 60%**.
+  > The low number of observations have a big effect on the modeling performance  
+  > That being said, we were able to improve upon the baseline accuracy **from about 55%** to **over 60%**
 * I suggest that the company:
- > Continue to have good delivery times
- > Ensure that the contents of the order are what the customer wanted
- > The company would do well to **gather more survey responses**, which would **help improve the performance of the models**
+  > Continue to have good delivery times  
+  > Ensure that the contents of the order are what the customer wanted  
+  > The company would do well to **gather more survey responses**, which would **help improve the performance of the models**  
 
 ## Overview
 This project centers on training a model to predict customer satisfaction based on results of a customer survey from a delivery company. 
