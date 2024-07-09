@@ -4,19 +4,20 @@ By Samuel Alter
 Apziva: 18RTcr7zXIKyc7qb
 
 ## TL;DR
-* Project centers on modeling customer happiness based on results of survey, sourced from a food delivery company, to try and attain ≥73% accuracy
-* The stretch goal of the project was to determine which features were most important for the analysis
-* Survey had 126 total observations with 69 positive and 57 negative, for a positive rate of about 55%
-* The low number of observations was the largest challenge of the project, namely: how do we increase the accuracy of the models when they only have so much data to work on
-* I discretized the dataset to simplify the modeling, calling it the "thresholded" version of the dataset, so survey responses of 4 or 5 were changed to 1 and everything else was 0
-* `LazyClassifier` was used to help select (potentially) higher-performing models:
+* Project centers on **modeling customer happiness** based on results of survey, sourced from a **food delivery company**, to try and attain ≥73% accuracy
+  * The stretch goal of the project was to determine which features were most important for the analysis
+* Survey had **126 total observations** with 69 positive and 57 negative, for a **positive rate of about 55%**
+* The **low number of observations was the largest challenge of the project**, namely: how do we increase the accuracy of the models when they only have so much data to work on
+* I **discretized the dataset to simplify the modeling**, calling it the "thresholded" version of the dataset, so survey responses of 4 or 5 were changed to 1 and everything else was 0
+* **`LazyClassifier`** was used to help select (potentially) higher-performing models:
   * `XGBClassifier`, `LGBMClassifier`, `DecisionTreeClassifier`, `QuadraticDiscriminantAnalysis`
-* After the generic models failed on the thresholded, regular, and a OneHotEncoded version of the dataset, I put `Hyperopt` to work on searching the hyperparameter space. RFE was used for all except the `LogisticRegression` to try and achieve the stretch goal
+* After the generic models failed on the thresholded, regular, and a OneHotEncoded version of the dataset, I put **`Hyperopt`** to work on searching the hyperparameter space. **`RFE`** was used for all except the `LogisticRegression` to try and achieve the stretch goal
   * Algorithms used: `ExtraTreesClassifier`, `XGBoost`, `DecisionTreeClassifier`, `RandomForestClassifier`, `LGBMClassifier`, `LogisticRegression`, searching through all relevant solvers, `LogisticRegression`, searching with just the `liblinear` solver 
-* `Hyperopt` also failed to find a performant model as the accuracies were too volatile as the random seed dictated success and failure
+* `Hyperopt` also failed to find a performant model as **the accuracies were too volatile as the random seed dictated success and failure**
 * A final attempt took the form of stacking and voting methods, but used the tuned hyperparameters as parameters for the ensembled models, which were the same as above
-  * Stacking achieved an accuracy in the low 60%s
+  * **Stacking** achieved an **accuracy in the low 60%s**
   * Voting fared very poorly
+
 **Take-home messages:**
 * The company's **delivery time** elicited the **highest average satisfaction**
 * Upon opening their order, the customers rated the **contents of the order** the **worst average satisfaction**
@@ -24,8 +25,8 @@ Apziva: 18RTcr7zXIKyc7qb
   * The low number of observations have a big effect on the modeling performance  
   * That being said, we were able to improve upon the baseline accuracy **from about 55%** to **over 60%**
 * I suggest that the company:
-  * Continue to have good delivery times  
-  * Ensure that the contents of the order are what the customer wanted  
+  * Continue to have **good delivery times**  
+  * Ensure that the **contents of the order** are what the customer wanted  
   * The company would do well to **gather more survey responses**, which would **help improve the performance of the models**  
 
 ## Overview
