@@ -23,7 +23,7 @@ Apziva: 18RTcr7zXIKyc7qb
 * The **results** of our modeling show:
   * The low number of observations have a big effect on the modeling performance and RFE was not conclusive  
   * We were still able to improve upon the baseline accuracy **from about 55%** to **over 60%**
-* I suggest that the company:
+* I **suggest** that the company:
   * Continue to have **good delivery times**  
   * Ensure that the **contents of the order** are what the customer wanted  
   * The company would do well to **gather more survey responses**, which would **help improve the performance of the models**
