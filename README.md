@@ -1,7 +1,33 @@
-# Happy Customers - An Apziva Project (#1)
+# Happy Customers - Apziva Project (#1)
 By Samuel Alter
 
 Apziva: 18RTcr7zXIKyc7qb
+
+## TL;DR
+* Project centers on **modeling customer happiness** based on results of survey, sourced from a **food delivery company**, to try and attain ≥73% accuracy
+  * The stretch goal of the project was to determine which features were most important for the analysis
+* Survey had **126 total observations** with 69 positive and 57 negative, for a **positive rate of about 55%**
+* The **low number of observations was the largest challenge of the project**, namely: how do we increase the accuracy of the models when they only have so much data to work on
+* I **discretized the dataset to simplify the modeling**, calling it the "thresholded" version of the dataset, so survey responses of 4 or 5 were changed to 1 and everything else was 0
+* **`LazyClassifier`** was used to help select (potentially) higher-performing models:
+  * `XGBClassifier`, `LGBMClassifier`, `DecisionTreeClassifier`, `QuadraticDiscriminantAnalysis`
+* After the generic models failed on the thresholded, regular, and a OneHotEncoded version of the dataset, I put **`Hyperopt`** to work on searching the hyperparameter space. **`RFE`** was used for all except the `LogisticRegression` to try and achieve the stretch goal
+  * Algorithms used: `ExtraTreesClassifier`, `XGBoost`, `DecisionTreeClassifier`, `RandomForestClassifier`, `LGBMClassifier`, `LogisticRegression`, searching through all relevant solvers, `LogisticRegression`, searching with just the `liblinear` solver 
+* `Hyperopt` also failed to find a performant model as **the accuracies were too volatile as the random seed dictated success and failure**
+* A final attempt took the form of stacking and voting methods, but used the tuned hyperparameters as parameters for the ensembled models, which were the same as above
+  * **Stacking** achieved an **accuracy in the low 60%s**
+  * Voting fared very poorly
+
+**Take-home messages:**
+* The company's **delivery time** elicited the **highest average satisfaction**
+* Upon opening their order, the customers rated the **contents of the order** the **worst average satisfaction**
+* The **results** of our modeling show:
+  * The low number of observations have a big effect on the modeling performance  
+  * That being said, we were able to improve upon the baseline accuracy **from about 55%** to **over 60%**
+* I suggest that the company:
+  * Continue to have **good delivery times**  
+  * Ensure that the **contents of the order** are what the customer wanted  
+  * The company would do well to **gather more survey responses**, which would **help improve the performance of the models**  
 
 ## Overview
 This project centers on training a model to predict customer satisfaction based on results of a customer survey from a delivery company. 
@@ -26,69 +52,89 @@ Attributes `X1` through `X6` are on a 1 to 5 scale, with 5 indicating most agree
 * **Stretch Goal**: determine which features are more important.
   * What is the minimal set of attributes or features that would preserve the most information, while at the same time increasing predictability?
   * See if any question can be eliminated in the next survey round.
- 
+
 ## EDA
 ![Distribution of customer happiness in target (y). 54.76% of respondents were happy, while 45.0% of them were unhappy](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/197cb671-eebb-4526-9bb4-24a5800beef1)
 
-54.76% of the respondents were happy, while 45.0% of them were unhappy.
+54.76% of the respondents were happy, while 45.0% of them were unhappy. The roughly 55% base rate of customer happiness will serve as the baseline for comparing our modeling efforts' success.
 
-![1_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/852df7d2-6022-416e-8734-a77a8917f7d2)
+![2_xdistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/852df7d2-6022-416e-8734-a77a8917f7d2)
 
-This plot illustrates well the distribution of responses received in the survey. Although it is harder to draw conclusions from this figure, I think it is still valid to understand the overall trends in the data. Figure 3 has more explanatory value.
+This plot illustrates well the distribution of responses received in the survey. This is helpful to understand the overall trends in the data.
 
-![1_xmeandistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/ca427f60-15f5-4563-b8eb-f0549228524c)
+![3_xmeandistribution](https://github.com/sralter/UP2IqAzAWrVBrULk/assets/25013680/ca427f60-15f5-4563-b8eb-f0549228524c)
 
 The delivery time and app experience had the highest mean satisfaction in the survey. Customers were least satisfied with what they expected of the contents of their order.
 
-![Correlation Matrix](https://github.com/sralter/Happy_Customers/assets/25013680/e32bad69-6165-4c1e-94a8-7d348d484c08)
+![4_Correlation Matrix](https://github.com/sralter/Happy_Customers/assets/25013680/e32bad69-6165-4c1e-94a8-7d348d484c08)
 
 The results of the correlation matrix show that if one aspect of the experience is positive, the customer will rate others positive as well. One interesting correlation to highlight is the courier and time are connected, which makes sense: the courier is the person that gives you your order, and if the courier is on time you probably will rate the courier highly too.
 
 ### EDA Summary
-In the dataset that we were given, roughly half of the respondents were unhappy. From a business standpoint, this is an opportunity to increase the amount of satisfied customers. Hence the survey, ostensibly to understand how the company can improve the satisfaction of their customers.
+In the dataset that we were given, with 126 observations, roughly half of the respondents were unhappy. From a business standpoint, this is an opportunity to increase the amount of satisfied customers. Hence the survey, ostensibly to understand how the company can improve the satisfaction of their customers.
 
 The results from the survey show that the delivery time and the app experience are places where the company is doing well. Areas for improvement are ensuring that the order is prepared correctly and customers being able to find what they need when they place an order.
 
-We need to do more modeling to understand which survey questions are most important and which can be removed. We will do this in the subsequent sections below.
+We need to shift to modeling to understand which survey questions are most important and which can be removed. We will do this in the subsequent sections below.
 
 ## Modeling
-We will use 1574 as the random seed for our modeling efforts.
+We discretized the features into binary so that if the respondents scored a 4 or 5, I would label that a 1; otherwise, I would label it a 0. I called this engineered dataset the "threshold" dataset. This process will simplify the analysis for the models.
 
 ### `lazypredict`
 [`lazypredict`](#https://lazypredict.readthedocs.io/en/latest/) is a very helpful package that can run through generic builds of a multitude of models in order to get a high-level understanding of the performance of these models on your particular dataset. It saves a lot of time that would be spent manually exploring the accuracy of different models.
 
-The following table shows the first ten rows of the results from `lazypredict`:
+The following table shows the first ten rows of the results from one iteration of `lazypredict`:
 
-|Model                        |Accuracy           |Balanced Accuracy  |ROC AUC            |F1 Score           |Time Taken           |
-|-----------------------------|-------------------|-------------------|-------------------|-------------------|---------------------|
-|LGBMClassifier               |0.7307692307692307 |0.7261904761904762 |0.7261904761904762 |0.7295582977741899 |0.16534090042114258  |
-|BernoulliNB                  |0.7307692307692307 |0.7261904761904762 |0.7261904761904762 |0.7295582977741899 |0.006081819534301758 |
-|SGDClassifier                |0.6153846153846154 |0.625              |0.625              |0.6108058608058609 |0.009582042694091797 |
-|NearestCentroid              |0.6153846153846154 |0.6190476190476191 |0.6190476190476191 |0.6153846153846154 |0.0072171688079833984|
-|Perceptron                   |0.6153846153846154 |0.6071428571428572 |0.6071428571428572 |0.6107226107226107 |0.00656580924987793  |
-|NuSVC                        |0.5769230769230769 |0.5714285714285714 |0.5714285714285714 |0.575020182216584  |0.010294675827026367 |
-|GaussianNB                   |0.5769230769230769 |0.5654761904761905 |0.5654761904761905 |0.5671747607231478 |0.006016969680786133 |
-|CalibratedClassifierCV       |0.5769230769230769 |0.5476190476190477 |0.5476190476190476 |0.5014553014553015 |0.021075963973999023 |
-|QuadraticDiscriminantAnalysis|0.5384615384615384 |0.5357142857142857 |0.5357142857142857 |0.5384615384615384 |0.008083820343017578 |
-|LogisticRegression           |0.5384615384615384 |0.5297619047619048 |0.5297619047619048 |0.5328671328671329 |0.010271072387695312 |
+|                         Model | Accuracy | Balanced Accuracy | ROC AUC | F1 Score | Time Taken |
+|------------------------------:|---------:|------------------:|--------:|---------:|-----------:|
+|                   BernoulliNB |     0.77 |              0.79 |    0.79 |     0.76 |       0.00 |
+|               NearestCentroid |     0.77 |              0.79 |    0.79 |     0.76 |       0.01 |
+| QuadraticDiscriminantAnalysis |     0.77 |              0.77 |    0.77 |     0.77 |       0.00 |
+|                    GaussianNB |     0.77 |              0.77 |    0.77 |     0.77 |       0.01 |
+|            AdaBoostClassifier |     0.69 |              0.70 |    0.70 |     0.69 |       0.03 |
+|    LinearDiscriminantAnalysis |     0.69 |              0.70 |    0.70 |     0.69 |       0.01 |
+|                 XGBClassifier |     0.69 |              0.70 |    0.70 |     0.69 |       0.08 |
+|             RidgeClassifierCV |     0.69 |              0.70 |    0.70 |     0.69 |       0.01 |
+|               RidgeClassifier |     0.69 |              0.70 |    0.70 |     0.69 |       0.01 |
+|        RandomForestClassifier |     0.69 |              0.70 |    0.70 |     0.69 |       0.09 |
 
-`SGDClassifier` showed good results with the generic build of the model. We will also try modeling with the `XGBoost` algorithm.
+The following algorithms were chosen to be run in their default formulations as they usually scored highly in the `LazyClassifier` exploration:
+* `XGBClassifier`
+* `LGBMClassifier`
+* `DecisionTreeClassifier`
+* `QuadraticDiscriminantAnalysis`
 
-### `XGBoost`
-The results of the basic form of the model yield an accuracy of 46% - pretty dismal and lower than the base of 54% (in the entire dataset, 54% of respondents were happy).
+The results of this modeling, however, were poor. This led us to try `Hyperopt`, a powerful tool that can help search for the optimal hyperparameters. 
+* RFE was used to help select a subset of the features to help answer the stretch goal of the project
 
-#### Grid Search with XGBoost
-* The best score on the training set was 67% using the following parameters:
+### `Hyperopt`
+The following algorithms were used:
+* `ExtraTreesClassifier`
+* `XGBoost`
+* `DecisionTreeClassifier`
+* `RandomForestClassifier`
+* `LGBMClassifier`
+* `LogisticRegression`, searching through all relevant solvers
+* `LogisticRegression`, searching with just the `liblinear` solver  
 
-|Parameter name | Value|
-|-|-|
-|`alpha`|0|
-|`gamma`|0|
-|`lambda`|0.275|
-|`learning_rate`|1.6302342008295345|
-|`max_depth`|2|
-|`min_child_weight`|3.5|
-|`n_estimators`|53|
-* When the testing data is run with these parameters, we get a cross-validated accuracy of: 57.88% ± 8.47%
+As with the generic models, this effort was not fruitful. I tried one more attempt, this time with the ensemble methods of **stacking** and **voting**.
 
-This is a better result than the base model, though I'm certain there's more we can do to increase the accuracy.
+### Ensembling Methods
+By combining the outputs of multiple models together into a metamodel, we could potentially achieve a better accuracy.
+* Stacking
+  > Achieved accuracies in the low 0.60s
+* Voting
+  > Results were poor
+
+## Conclusion
+* The company's **delivery time** elicited the **highest average satisfaction**
+* Upon opening their order, the customers rated the **contents of the order** the **worst average satisfaction**
+
+The results of our modeling show:
+* The low number of observations have a big effect on the modeling performance
+* That being said, we were able to improve upon the baseline accuracy **from about 55%** to **over 60%**.
+
+I suggest that the company:
+* Continue to have good delivery times
+* Ensure that the contents of the order are what the customer wanted
+* The company would do well to **gather more survey responses**, which would **help improve the performance of the models**
