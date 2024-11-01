@@ -3,7 +3,7 @@ By Samuel Alter
 
 Apziva: jWDiOwOKuIPAi4ZI
 
-## TL;DR
+## Summary
 * Project centered on **predicting customer happiness** based on the results of a survey, sourced from a **food delivery company**, to attain ≥73% accuracy
   * The stretch goal was to determine which features are most important for predicting customer happiness
 * Survey had **126 total observations** with 69 positive and 57 negative, for a **positive rate of about 55%**
